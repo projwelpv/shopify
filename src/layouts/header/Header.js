@@ -30,6 +30,7 @@ import { loginCustomer, logoutCustomer } from "../../actions/Customer/Login";
 import { signUpCustomer } from "../../actions/Customer/SignUp";
 import AllProduct from "../../api/product";
 import logo from "../../assets/images/emporix.svg";
+import logo1 from "../../assets/images/tt.png";
 import navLinks from "../../NavLinks.js";
 import { ToastContainer, toast } from "react-toastify";
 import { deleteCartItems } from "../../actions/Cart";
@@ -49,7 +50,8 @@ class Header extends React.Component {
       CartHide: true,
       classset: "",
       getproduct: AllProduct,
-      userName: "",
+      fName: "",
+      lName: "",
       email: "",
       password: "",
       number: "",
@@ -238,7 +240,7 @@ class Header extends React.Component {
                           <li className="topbar_item topbar_item_type-email">
                             <Link to="#">
                               <i className="fa fa-envelope-o">&nbsp;</i>
-                              support@emporix.com
+                              support@shopify.com
                             </Link>
                           </li>
                           <li className="topbar_item topbar_item_type-phone_number">
@@ -258,7 +260,7 @@ class Header extends React.Component {
                           <li className="topbar_item topbar_item_type-topbar_menu">
                             <div className="menu-top-bar-menu-container">
                               <ul className="top-menu list-inline">
-                                {this.props.user && this.props.user.id && (
+                                {this.props?.user && this.props.user?.data?.customer?.id && (
                                   <li className="menu-item">
                                     <Link to="/Account/AccountProfile">
                                       My account
@@ -270,8 +272,8 @@ class Header extends React.Component {
                                     to="#"
                                     onClick={() => {
                                       if (
-                                        this.props.user &&
-                                        this.props.user.id
+                                        this.props?.user &&
+                                        this.props.user?.data?.customer?.id
                                       ) {
                                         this.props.logoutCustomer();
                                         localStorage.setItem("MYID", uuidv4());
@@ -283,7 +285,7 @@ class Header extends React.Component {
                                     data-target="#"
                                   >
                                     <i className="fa fa-sign-in">&nbsp;</i>{" "}
-                                    {this.props.user && this.props.user.id
+                                    {this.props.user && this.props.user?.data?.customer?.id
                                       ? "Logout"
                                       : "Login"}
                                   </Link>
@@ -352,7 +354,7 @@ class Header extends React.Component {
                       <Col xl={2} lg={2} className="col-6">
                         <div className="logo-wrapper">
                           <Link to="/">
-                            <img className="img-fluid" src={logo} alt="logo" />
+                            <img className="img-fluid" src={logo1} alt="logo" />
                           </Link>
                         </div>
                         <div className="clearfix" />
@@ -567,7 +569,8 @@ class Header extends React.Component {
                                                                 {
                                                                   minimumFractionDigits: 0,
                                                                 }
-                                                              )} */}{CartItem.Rate}
+                                                              )} */}
+                                                              {CartItem.Rate}
                                                             </span>
                                                           </span>
                                                         </span>
@@ -820,12 +823,12 @@ class Header extends React.Component {
                                     this.state.password.length > 3
                                   ) {
                                     this.props
-                                      .loginCustomer({
+                                      .loginCustomer({input:{
                                         email: this.state.email,
                                         password: this.state.password,
-                                      })
+                                      }})
                                       .then((status) => {
-                                        console.log("this is callding me");
+                                        console.log("this is callding me",status);
                                         if (status) {
                                           // window.location.reload();
                                           this.toggle();
@@ -873,14 +876,26 @@ class Header extends React.Component {
                         <TabPane tabId="2">
                           <form>
                             <div class="form-group">
-                              <label>Name</label>
+                              <label>First Name</label>
                               <input
                                 type="texttext"
                                 class="form-control"
                                 placeholder="Name"
-                                value={this.state.userName}
+                                value={this.state.fName}
                                 onChange={(e) => {
-                                  this.setState({ userName: e.target.value });
+                                  this.setState({ fName: e.target.value });
+                                }}
+                              ></input>
+                            </div>
+                            <div class="form-group">
+                              <label>Last Name</label>
+                              <input
+                                type="texttext"
+                                class="form-control"
+                                placeholder="Name"
+                                value={this.state.lName}
+                                onChange={(e) => {
+                                  this.setState({ lName: e.target.value });
                                 }}
                               ></input>
                             </div>
@@ -938,31 +953,25 @@ class Header extends React.Component {
                               <Link
                                 onClick={() => {
                                   if (
-                                    this.state.userName.length > 3 &&
+                                    this.state.fName.length > 3 &&
                                     this.state.email.length > 3 &&
                                     this.state.password.length > 3
                                   ) {
                                     this.props
                                       .signUpCustomer({
-                                        email: this.state.email,
-                                        password: this.state.password,
-                                        customerDetails: {
-                                          title: "MR",
-                                          firstName: this.state.userName,
-                                          middleName: "",
-                                          lastName: this.state.userName,
-                                          contactEmail: this.state.email,
-                                          contactPhone: this.state.number,
-                                          company: "Emporix",
-                                          preferredLanguage: "en_US",
-                                          preferredCurrency: "USD",
-                                          preferredSite: "main",
+                                        input: {
+                                          firstName: this.state.fName,
+                                          lastName: this.state.lName,
+                                          email: this.state.email,
+                                          phone: this.state.number,
+                                          password: this.state.password,
+                                          acceptsMarketing: false,
                                         },
                                       })
                                       .then((response) => {
                                         if (response) {
                                           this.setState({
-                                            userName: "",
+                                            fName: "",
                                             password: "",
                                             email: "",
                                             number: "",

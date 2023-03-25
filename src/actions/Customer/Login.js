@@ -7,8 +7,12 @@ import LocalStorageService from "../../storage/LocalStorageService";
 export const loginCustomer = (params) => {
   return (dispatch) => {
     return new Promise((resolve, reject) => {
-      return post(`login`, params)
+      return post(`accessToken`, params)
         .then((response) => {
+          let data1={
+            "customerAccessToken" :response.data?.data?.customerAccessTokenCreate?.customerAccessToken?.accessToken
+          }
+          LocalStorageService.setUserToken(response?.data?.customerAccessTokenCreate?.customerAccessToken?.accessToken);
           console.log("Login ", response);
           if (response.status === 200) {
             if (
@@ -20,62 +24,62 @@ export const loginCustomer = (params) => {
             }
           }
           // const foundCustomerId = extractCustomerID(response.data?.scope)
-          LocalStorageService.setUserToken(response.data?.accessToken);
-          LocalStorageService.setSaasToken(response.data?.saasToken);
-          // console.log("login API response", response.data, 'customer id: ', foundCustomerId);
-          get("getCustomerDetails")
+          
+          // LocalStorageService.setSaasToken(response.data?.saasToken);
+         
+          post("customer",data1)
             .then((response) => {
               if (response.status === 200) {
-                LocalStorageService.setCustId(response.data?.id);
-                let data = {
-                  customerId: response.data?.id,
-                  siteCode: "main",
-                  type: "shopping",
-                  channel: {
-                    name: "storefront",
-                    source: "https://your-storefront.com/",
-                  },
-                  currency: "USD",
-                };
+                // LocalStorageService.setCustId(response.data?.id);
+                // let data = {
+                //   customerId: response.data?.id,
+                //   siteCode: "main",
+                //   type: "shopping",
+                //   channel: {
+                //     name: "storefront",
+                //     source: "https://your-storefront.com/",
+                //   },
+                //   currency: "USD",
+                // };
                 dispatch({
-                  type: "GET_CUSTOMER_SUCCESS",
+                  type: "LOGIN_SUCCESS",
                   user: response,
-                });
+                })
                 localStorage.setItem(
                   "customerInfo",
                   JSON.stringify(response.data)
                 );
-                get(`getCustomerCart/${response.data?.id}`)
-                  .then((response) => {
-                    if (response.status === 200) {
-                      if (response?.data?.id) {
-                        dispatch({
-                          type: "GET_CUSTOMER_CART",
-                          cart: response.data.id,
-                        });
-                      }
+                // get(`getCustomerCart/${response.data?.id}`)
+                //   .then((response) => {
+                //     if (response.status === 200) {
+                //       if (response?.data?.id) {
+                //         dispatch({
+                //           type: "GET_CUSTOMER_CART",
+                //           cart: response.data.id,
+                //         });
+                //       }
 
-                      resolve(response);
-                    } else {
-                      resolve(false);
-                    }
-                  })
-                  .catch(() => {
-                    post("createCart", data, true)
-                      .then((response) => {
-                        if (response.status == 201) {
-                          dispatch({
-                            type: "GET_CUSTOMER_CART",
-                            cart: response.data.cartId,
-                          });
-                        }
-                      })
-                      .catch((error) => {
-                        console.log(error);
-                      })
-                      .finally();
-                  })
-                  .finally();
+                //       resolve(response);
+                //     } else {
+                //       resolve(false);
+                //     }
+                //   })
+                //   .catch(() => {
+                //     post("createCart", data, true)
+                //       .then((response) => {
+                //         if (response.status == 201) {
+                //           dispatch({
+                //             type: "GET_CUSTOMER_CART",
+                //             cart: response.data.cartId,
+                //           });
+                //         }
+                //       })
+                //       .catch((error) => {
+                //         console.log(error);
+                //       })
+                //       .finally();
+                //   })
+                //   .finally();
 
                 resolve(response);
               } else {

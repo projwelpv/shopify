@@ -140,11 +140,13 @@ class TopSellingProduct extends Component {
   }
 
   render() {
+
+    // console.log("this issssssssssssss",this.props.products)
     return (
       <Row className="products products-loop grid ciyashop-products-shortcode">
         <ToastContainer autoClose={1000} />
 
-        {this.props.products.map((product, index) =>
+        {this.props?.products?.products?.map((product, index) =>
           index < 8 ? (
             <Col sm={6} lg={3}>
               <div className="product product_tag-black product-hover-style-default product-hover-button-style-dark product_title_type-single_line product_icon_type-line-icon">
@@ -154,7 +156,7 @@ class TopSellingProduct extends Component {
                       <Link to={`/shop/${product.id}`}>
                         <div className="product-thumbnail-main">
                           <img
-                            src={`${product.media[0].url}`}
+                            src={`${product.images[0].src}`}
                             className="img-fluid"
                             alt="shop"
                           />
@@ -176,10 +178,12 @@ class TopSellingProduct extends Component {
                               onClick={() =>
                                 this.AddToCart(
                                   product.id,
-                                  product.name.en,
-                                  product.media[0].url,
+                                  product.title,
+                                  product.images[0].url,
                                   1,
-                                  this.getProductPrice(product.id),
+                                  // this.getProductPrice(product.id),
+                                  product.variants[0].price,
+
                                   "In Stock",
                                   product.id
                                 )
@@ -205,10 +209,10 @@ class TopSellingProduct extends Component {
                               onClick={() =>
                                 this.AddToWishList(
                                   product.id,
-                                  product.name.en,
-                                  product.media[0].url,
+                                  product.title,
+                                  product.images[0].src,
                                   1,
-                                  // product.salePrice,
+                                  product.variants[0].price,
                                   "In Stock",
                                   product.id
                                 )
@@ -241,7 +245,7 @@ class TopSellingProduct extends Component {
                       {/* {product.category} */}
                     </span>
                     <h3 className="product-name">
-                      <Link to={`/shop/${product.id}`}>{product.name.en} </Link>
+                      <Link to={`/shop/${product.id}`}>{product.title} </Link>
                     </h3>
                     <div className="product-rating-price">
                       <span className="price">
@@ -252,7 +256,7 @@ class TopSellingProduct extends Component {
                               navigator.language,
                               { minimumFractionDigits: 0 }
                             )} */}{" "}
-                            {this.getProductPrice(product.id)}
+                            { product.variants[0].price}
                           </span>
                         </ins>
                       </span>

@@ -8,9 +8,12 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import { toast } from "react-toastify";
-import { Row } from "reactstrap";
+import { Row, Nav,
+  NavItem,
+  NavLink, } from "reactstrap";
 import { bindActionCreators } from "redux";
 import { addToCartItem } from "../../actions/Cart";
+import classnames from "classnames";
 import {
   deleteCartItems,
   getCartItems,
@@ -40,7 +43,9 @@ class PostDetail extends Component {
       photoIndex: 0,
       isOpen: false,
       qty: 1,
-      newImage: props.product.media[0].url,
+      newImage: props.product.images[0].src,
+      activeTab: "1",
+      colorTabp:0
     };
   }
 
@@ -71,17 +76,15 @@ class PostDetail extends Component {
       localStorage.removeItem("LocalCartItems");
       localStorage.setItem("LocalCartItems", JSON.stringify(Cart));
       // addToCartItem(ProductID, Sku);
-      let pricelist=[]
-      this.props.allPrices.map((each,index)=>{
-        if(each.itemId.id===ProductID){
-          pricelist.push(each)
-    
+      let pricelist = [];
+      this.props.allPrices.map((each, index) => {
+        if (each.itemId.id === ProductID) {
+          pricelist.push(each);
         }
-      })
-    
-      if(pricelist.length >0){
-        addToCartItem(this.props.cartID,ProductID,pricelist);
-    
+      });
+
+      if (pricelist.length > 0) {
+        addToCartItem(this.props.cartID, ProductID, pricelist);
       }
       toast.success("Item Added to Cart");
     } else {
@@ -254,23 +257,29 @@ class PostDetail extends Component {
     return wishlist;
   }
 
-  getProductPrice(id){
-    let price
+  getProductPrice(id) {
+    let price;
 
-    this.props.allPrices.map((each,index)=>{
-      if(each.itemId.id===id){
-      price=each.salePrice.discountAmount
+    this.props.allPrices.map((each, index) => {
+      if (each.itemId.id === id) {
+        price = each.salePrice.discountAmount;
       }
-    })
-    return price
-
+    });
+    return price;
+  }
+  logintoggle(tab) {
+    if (this.state.activeTab !== tab) {
+      this.setState({
+        activeTab: tab,
+      });
+    }
   }
 
   render() {
     const { photoIndex, isOpen } = this.state;
     const qty = this.state.qty;
     const { product } = this.props;
-    const images = [product.media[0].url,product.media[0].url];
+    // const images = [product.media[0].url,product.media[0].url];
     // product.pictures.map((pic) => images.push(pic));
 
     let rat = [];
@@ -300,7 +309,7 @@ class PostDetail extends Component {
                       >
                         <div className="ciyashop-product-gallery__image">
                           <img
-                            src={product.media[0].url}
+                            src={product.images[this.state.colorTabp].src}
                             className="img-fluid"
                           />
                         </div>
@@ -345,7 +354,7 @@ class PostDetail extends Component {
             <div className="product-top-right col-xl-7 col-md-6">
               <div className="product-top-right-inner">
                 <div className="summary entry-summary">
-                  <h1 className="product_title entry-title">{product.name.en}</h1>
+                  <h1 className="product_title entry-title">{product.title}</h1>
                   {/* <div className="product-rating">
                     <div className="star-rating">{rat}</div>
                     <p className="review-link mt-2">
@@ -357,9 +366,41 @@ class PostDetail extends Component {
                   ).toLocaleString(navigator.language, {
                     minimumFractionDigits: 0,
                   })}`}</p> */}
+                  <p className="price">${product.variants[0].price} </p>
                   <div className="product-details__short-description">
                     <div className="pdp-about-details-txt pdp-about-details-equit">
-                      {product.description.en}
+                      {/* {product.description.en} */}
+                      <div>
+                        <p>Color</p>
+                    <Nav pills>
+                        <NavItem>
+                          <NavLink
+                            className={classnames({
+                              active: this.state.activeTab === "1",
+                            })}
+                            onClick={() => {
+                              this.logintoggle("1");
+                              this.setState({...this.state,colorTabp:0})
+                            }}
+                          >
+                          Gold
+                          </NavLink>
+                        </NavItem>
+                        <NavItem>
+                          <NavLink
+                            className={classnames({
+                              active: this.state.activeTab === "2",
+                            })}
+                            onClick={() => {
+                              this.logintoggle("2");
+                              this.setState({...this.state,colorTabp:1})
+                            }}
+                          >
+                            silver
+                          </NavLink>
+                        </NavItem>
+                      </Nav>
+                    </div>
                     </div>
                   </div>
                   <form className="cart">
@@ -391,15 +432,17 @@ class PostDetail extends Component {
                         </Link>
                       </div>
                     </div>
+                   
+                  
                     {!this.CheckCardItem(product.id) ? (
                       <Link
                         onClick={() =>
                           this.AddToCart(
                             product.id,
-                            product.name.en,
-                            product.media[0].url,
+                            product.title,
+                            product.images[0].src,
                             1,
-                            this.getProductPrice(product.id),
+                            product.variants[0].price,
                             "In Stock",
                             product.id
                           )
@@ -427,12 +470,12 @@ class PostDetail extends Component {
                           onClick={() =>
                             this.AddToWishList(
                               product.id,
-                              product.name,
-                              product.pictures[0],
+                              product.title,
+                              product.images[0].src,
                               qty,
-                              product.salePrice,
+                              product.variants[0].price,
                               "In Stock",
-                              product.sku
+                              product.id
                             )
                           }
                         >
@@ -446,11 +489,11 @@ class PostDetail extends Component {
                     )}
                   </div>
                   {/* <div className="product_meta"> */}
-                    {/* <span className="sku_wrapper">
+                  {/* <span className="sku_wrapper">
                       <label>SKU:</label>
                       <span className="sku">9624 </span>
                     </span> */}
-                    {/* <span className="size">
+                  {/* <span className="size">
                       <label>Size:</label>
                       {product.size.map((sizes, index) => (
                         <span itemProp="size">
@@ -461,11 +504,11 @@ class PostDetail extends Component {
                         </span>
                       ))}
                     </span> */}
-                    {/* <span className="posted_in">
+                  {/* <span className="posted_in">
                       <label>Categories:</label>
                       {product.category}
                     </span> */}
-                    {/* <span className="brands">
+                  {/* <span className="brands">
                       <label>Brand:</label>
                       {product.tags.map((brand, index) => (
                         <span itemProp="brand">
@@ -667,8 +710,8 @@ const AppMapDispatchToProps = (dispatch) => {
 const AppMapStateToProps = (state) => {
   return {
     products: state.data.products,
-    allPrices:state?.price?.prices,
-    cartID:state.cartId.cartId
+    allPrices: state?.price?.prices,
+    cartID: state.cartId.cartId,
   };
 };
 

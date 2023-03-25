@@ -40,137 +40,137 @@ export const getFilterProductsdata = (data, { category, size, color,value, sortO
     
     let sizes = size;  
 
-    return data.products.filter(product => {
+    // return data?.products?.products.filter(product => {
         
-        let categoryMatchValue;
-        if(product.tags)
-            categoryMatchValue = product.tags.some(tag => category.includes(tag))
-        else
-            categoryMatchValue = true;  
+    //     let categoryMatchValue;
+    //     if(product?.tags)
+    //         categoryMatchValue = product.tags.some(tag => category.includes(tag))
+    //     else
+    //         categoryMatchValue = true;  
    
 
-        let sizeMatchValue;
-        if(product.size)
-             sizeMatchValue = product.size.some(size => sizes.includes(size))
-        else
-             sizeMatchValue = true;
+    //     let sizeMatchValue;
+    //     if(product.size)
+    //          sizeMatchValue = product.size.some(size => sizes.includes(size))
+    //     else
+    //          sizeMatchValue = true;
 
-        let colorMatchValue;
-        if(color && product.colors) {
-            colorMatchValue = product.colors.some(colors => color.includes(colors))
-        }else{
-            colorMatchValue = false;
-        }
+    //     let colorMatchValue;
+    //     if(color && product.colors) {
+    //         colorMatchValue = product.colors.some(colors => color.includes(colors))
+    //     }else{
+    //         colorMatchValue = false;
+    //     }
 
-        let searchMatchValue;
-        if(product.name.en) {
-            if(search == search.toLowerCase())
-            {
-                searchMatchValue=product.name.en.toLowerCase().indexOf(search.toLowerCase()) > -1
-            }
-            else
-            {
-                searchMatchValue=product.name.en.toUpperCase().indexOf(search.toUpperCase()) > -1
-            }
-        }
-        else
-        {
-            searchMatchValue = false;
-        }
+    //     let searchMatchValue;
+    //     if(product.name.en) {
+    //         if(search == search.toLowerCase())
+    //         {
+    //             searchMatchValue=product.name.en.toLowerCase().indexOf(search.toLowerCase()) > -1
+    //         }
+    //         else
+    //         {
+    //             searchMatchValue=product.name.en.toUpperCase().indexOf(search.toUpperCase()) > -1
+    //         }
+    //     }
+    //     else
+    //     {
+    //         searchMatchValue = false;
+    //     }
        
-        let ratingMatchValue;
-        if(product.rating == ratings) {
-            ratingMatchValue = true;
-        }
-        else if(ratings == "")
-        {
-            ratingMatchValue = true;
-        }
-        else{
-            ratingMatchValue = false;
-        } 
+    //     let ratingMatchValue;
+    //     if(product.rating == ratings) {
+    //         ratingMatchValue = true;
+    //     }
+    //     else if(ratings == "")
+    //     {
+    //         ratingMatchValue = true;
+    //     }
+    //     else{
+    //         ratingMatchValue = false;
+    //     } 
         
-        const startPriceMatchValue = typeof value.min !== 'number' || value.min <= product.salePrice;
-        const endPriceMatchValue = typeof value.max !== 'number' || product.salePrice <= value.max;
+    //     const startPriceMatchValue = typeof value.min !== 'number' || value.min <= product.salePrice;
+    //     const endPriceMatchValue = typeof value.max !== 'number' || product.salePrice <= value.max;
 
-       // let filtercheck=JSON.parse(localStorage.state).filters;
+       
         
-        if(category.length > 0 && color.length > 0 && size.length > 0 && ratings.length > 0 )
-        {
-            return  categoryMatchValue && colorMatchValue  && sizeMatchValue && ratingMatchValue && startPriceMatchValue && endPriceMatchValue && searchMatchValue;
-        }
-        if(category.length > 0 && color.length > 0 && size.length > 0   )
-        {
-            return  categoryMatchValue && colorMatchValue  && sizeMatchValue && startPriceMatchValue && endPriceMatchValue  && searchMatchValue;
-        }
-        if(category.length > 0 && size.length > 0 && ratings.length > 0  )
-        {
-            return  categoryMatchValue && colorMatchValue  && ratingMatchValue && startPriceMatchValue && endPriceMatchValue && searchMatchValue;
-        }
-        if(category.length > 0 && color.length > 0 && ratings.length > 0 )
-        {
-            return  categoryMatchValue && colorMatchValue  &&  ratingMatchValue && startPriceMatchValue && endPriceMatchValue && searchMatchValue;
-        }
-        if(color.length > 0 && size.length > 0 && ratings.length > 0 )
-        {
-            return  colorMatchValue  && sizeMatchValue  && ratingMatchValue && startPriceMatchValue && endPriceMatchValue  && searchMatchValue;
-        }
-        if(category.length > 0 && color.length > 0 )
-        {
-            return  categoryMatchValue && colorMatchValue   && startPriceMatchValue && endPriceMatchValue && searchMatchValue;
-        }
-        if(category.length > 0 && size.length > 0)
-        {
-            return  categoryMatchValue && sizeMatchValue   && startPriceMatchValue && endPriceMatchValue  && searchMatchValue;
-        }
-        if(category.length > 0 && ratings.length > 0)
-        {
-            return  categoryMatchValue && ratingMatchValue   && startPriceMatchValue && endPriceMatchValue  && searchMatchValue;
-        }
-        if(color.length > 0 && size.length > 0)
-        {
-            return  colorMatchValue && sizeMatchValue   && startPriceMatchValue && endPriceMatchValue  && searchMatchValue;
-        }
-        if(color.length > 0 && ratings.length > 0)
-        {
-            return  colorMatchValue && ratingMatchValue   && startPriceMatchValue && endPriceMatchValue  && searchMatchValue;
-        }
-        if(size.length > 0 && ratings.length > 0)
-        {
-            return  sizeMatchValue && ratingMatchValue   && startPriceMatchValue && endPriceMatchValue  && searchMatchValue;
-        }
-        if(color.length > 0)
-        {
-            return  colorMatchValue   && startPriceMatchValue && endPriceMatchValue  && searchMatchValue;
-        }
-        if(category.length > 0)
-        {
-            return  categoryMatchValue   && startPriceMatchValue && endPriceMatchValue  && searchMatchValue;
-        }
-        if(size.length > 0)
-        {
-            return  sizeMatchValue   && startPriceMatchValue && endPriceMatchValue  && searchMatchValue;
-        }
-        if(ratings.length > 0)
-        {
-            return  ratingMatchValue   && startPriceMatchValue && endPriceMatchValue  && searchMatchValue;
-        }
-        else
-        {
-        return startPriceMatchValue && endPriceMatchValue  && searchMatchValue;
-       }
+    //     if(category.length > 0 && color.length > 0 && size.length > 0 && ratings.length > 0 )
+    //     {
+    //         return  categoryMatchValue && colorMatchValue  && sizeMatchValue && ratingMatchValue && startPriceMatchValue && endPriceMatchValue && searchMatchValue;
+    //     }
+    //     if(category.length > 0 && color.length > 0 && size.length > 0   )
+    //     {
+    //         return  categoryMatchValue && colorMatchValue  && sizeMatchValue && startPriceMatchValue && endPriceMatchValue  && searchMatchValue;
+    //     }
+    //     if(category.length > 0 && size.length > 0 && ratings.length > 0  )
+    //     {
+    //         return  categoryMatchValue && colorMatchValue  && ratingMatchValue && startPriceMatchValue && endPriceMatchValue && searchMatchValue;
+    //     }
+    //     if(category.length > 0 && color.length > 0 && ratings.length > 0 )
+    //     {
+    //         return  categoryMatchValue && colorMatchValue  &&  ratingMatchValue && startPriceMatchValue && endPriceMatchValue && searchMatchValue;
+    //     }
+    //     if(color.length > 0 && size.length > 0 && ratings.length > 0 )
+    //     {
+    //         return  colorMatchValue  && sizeMatchValue  && ratingMatchValue && startPriceMatchValue && endPriceMatchValue  && searchMatchValue;
+    //     }
+    //     if(category.length > 0 && color.length > 0 )
+    //     {
+    //         return  categoryMatchValue && colorMatchValue   && startPriceMatchValue && endPriceMatchValue && searchMatchValue;
+    //     }
+    //     if(category.length > 0 && size.length > 0)
+    //     {
+    //         return  categoryMatchValue && sizeMatchValue   && startPriceMatchValue && endPriceMatchValue  && searchMatchValue;
+    //     }
+    //     if(category.length > 0 && ratings.length > 0)
+    //     {
+    //         return  categoryMatchValue && ratingMatchValue   && startPriceMatchValue && endPriceMatchValue  && searchMatchValue;
+    //     }
+    //     if(color.length > 0 && size.length > 0)
+    //     {
+    //         return  colorMatchValue && sizeMatchValue   && startPriceMatchValue && endPriceMatchValue  && searchMatchValue;
+    //     }
+    //     if(color.length > 0 && ratings.length > 0)
+    //     {
+    //         return  colorMatchValue && ratingMatchValue   && startPriceMatchValue && endPriceMatchValue  && searchMatchValue;
+    //     }
+    //     if(size.length > 0 && ratings.length > 0)
+    //     {
+    //         return  sizeMatchValue && ratingMatchValue   && startPriceMatchValue && endPriceMatchValue  && searchMatchValue;
+    //     }
+    //     if(color.length > 0)
+    //     {
+    //         return  colorMatchValue   && startPriceMatchValue && endPriceMatchValue  && searchMatchValue;
+    //     }
+    //     if(category.length > 0)
+    //     {
+    //         return  categoryMatchValue   && startPriceMatchValue && endPriceMatchValue  && searchMatchValue;
+    //     }
+    //     if(size.length > 0)
+    //     {
+    //         return  sizeMatchValue   && startPriceMatchValue && endPriceMatchValue  && searchMatchValue;
+    //     }
+    //     if(ratings.length > 0)
+    //     {
+    //         return  ratingMatchValue   && startPriceMatchValue && endPriceMatchValue  && searchMatchValue;
+    //     }
+    //     else
+    //     {
+    //     return startPriceMatchValue && endPriceMatchValue  && searchMatchValue;
+    //    }
 
-    }).sort((sortpro1, sortpro2) => {
-        if (sortOrder === 'Pricehigh') {
-            return sortpro2.salePrice < sortpro1.salePrice ? -1 : 1;
-        } else if (sortOrder === 'Pricelow') {
-            return sortpro2.salePrice > sortpro1.salePrice ? -1 : 1;
-        } else if (sortOrder === 'NewProduct') {
-            return sortpro2.id < sortpro1.id ? -1 : 1;
-        } else{
-            return sortpro2.salePrice > sortpro1.salePrice ? -1 : 1;
-        }
-    });
+    // }).sort((sortpro1, sortpro2) => {
+    //     if (sortOrder === 'Pricehigh') {
+    //         return sortpro2.salePrice < sortpro1.salePrice ? -1 : 1;
+    //     } else if (sortOrder === 'Pricelow') {
+    //         return sortpro2.salePrice > sortpro1.salePrice ? -1 : 1;
+    //     } else if (sortOrder === 'NewProduct') {
+    //         return sortpro2.id < sortpro1.id ? -1 : 1;
+    //     } else{
+    //         return sortpro2.salePrice > sortpro1.salePrice ? -1 : 1;
+    //     }
+    // });
 }
 
 
@@ -197,24 +197,24 @@ export const uniqueColors = (products) => {
 // Get Min & Max Data in Json
 export const uniqueMinMaxPrice = (products) => {
     let minimum = 0, maximum = 1000;
-    products.map((product, index) => {
-        let v = product.salePrice;
-        if(v < minimum)
-        {
-            minimum=v;
-        }
-        else
-        {
-            minimum=minimum;
-        }
-        if(v > maximum)
-        {
-            maximum=v;
-        }
-        else
-        {
-            maximum=maximum;
-        }
-    })
+    // products.map((product, index) => {
+    //     let v = product.salePrice;
+    //     if(v < minimum)
+    //     {
+    //         minimum=v;
+    //     }
+    //     else
+    //     {
+    //         minimum=minimum;
+    //     }
+    //     if(v > maximum)
+    //     {
+    //         maximum=v;
+    //     }
+    //     else
+    //     {
+    //         maximum=maximum;
+    //     }
+    // })
     return {'min':minimum, 'max':maximum};
 }

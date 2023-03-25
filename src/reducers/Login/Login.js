@@ -15,7 +15,7 @@ const LoginReducer = (state = initialState, action) => {
     case "SIGN_UP_SUCCESS":
       return {
         ...state,
-        // user: action.user,
+        user: action.user,
       };
     case "GET_CUSTOMER_SUCCESS":
       console.log("yatus", state.user);

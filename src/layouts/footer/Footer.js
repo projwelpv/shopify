@@ -54,7 +54,7 @@ class Footer extends React.Component {
                           <Link to="#">
                             <img
                               className="img-fluid"
-                              src={require(`../../assets/images/emporix.svg`)}
+                              src={require(`../../assets/images/tt.png`)}
                               alt="logo"
                             />
                           </Link>
@@ -63,7 +63,7 @@ class Footer extends React.Component {
                       <div className="text-content">
                         <p className="mb-3 mt-4">
                           Over the past 38 years, talented and capable people
-                          have powered Dr. Reddy’s growth and built our
+                          have powered Shopify growth and built our
                           reputation as a world-class pharmaceutical company.
                           Because when people with diverse skills are bound
                           together by a common purpose and values, they can make
@@ -72,7 +72,7 @@ class Footer extends React.Component {
                         <p className="mb-4">
                           Our patients trust our medicines, and we believe that
                           his trust must be earned every single day. Each of us
-                          at Dr. Reddy’s is driven by the belief that Good
+                          at Shopify is driven by the belief that Good
                           Health Can’t Wait. Acting with empathy and dynamism,
                           we continually remind ourselves that the interests of
                           our patients always comes first. In pursuit of our
@@ -218,8 +218,8 @@ class Footer extends React.Component {
                             <li>
                               <i className="fa fa-map-marker" />
                               <span>
-                                8-2-337, Road No. 3,Banjara Hills, Hyderabad,
-                                Telangana 500034, INDIA
+                                8-2-337, Road No. 3,Jaya nagar,
+                                Bangalure 600034, INDIA
                               </span>
                             </li>
                             <li className="pgs-contact-email">
@@ -325,7 +325,7 @@ class Footer extends React.Component {
                     <Col md={6} className="float-left">
                       <p>
                         {" "}
-                        © Copyright 2023 <Link to="#">Emporix</Link> All
+                        © Copyright 2023 <Link to="#">Shopify</Link> All
                         Rights Reserved.
                       </p>
                     </Col>

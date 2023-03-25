@@ -7,7 +7,7 @@ const localStorageService = LocalStorageService.getService();
 
 // Set config defaults when creating the instance
 const instance = axios.create({
-  baseURL: "http://13.126.66.2:1877",
+  baseURL: "https://shopify6.interplay.iterate.ai",
 });
 
 // Add a request interceptor
@@ -42,7 +42,7 @@ instance.interceptors.request.use(
     } 
     
     else {
-      config.headers["customer_accesstoken"] = userToken;
+      // config.headers["customer_accesstoken"] = userToken;
     }
     config.headers["Content-Type"] = "application/json";
     return config;

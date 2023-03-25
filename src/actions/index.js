@@ -1,13 +1,13 @@
 import Axios from "axios";
 import ProductsList from "../api/product.json";
 import Request from "../api/config/Interceptor";
-import { get } from "../api/APIController";
+import { post } from "../api/APIController";
 
 export const receiveProducts = (categoryData) => {
   return (dispatch) => {
     const productdata = ProductsList;
 
-    return get("getAllProducts")
+    return post("products")
       .then((response) => {
         console.log("GET PRODUCT", response.data);
         if (response.status == 200) {

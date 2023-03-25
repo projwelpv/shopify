@@ -63,10 +63,10 @@ class AccountProfile extends Component {
                       </div>
                       <div className="woocommerce-Address-info mt-4">
                         <ul class="list-unstyled mb-0">
-                          <li>
+                          {/* <li>
                             <span>UserName:</span>
                             <strong>{this.props?.user.firstName}</strong>
-                          </li>
+                          </li> */}
                           {/* <li>
                             <span>Last name:</span>
                             <strong>{Profile.lastname}</strong>
@@ -83,22 +83,23 @@ class AccountProfile extends Component {
                             <span>Phone no:</span>
                             <strong>{Profile.phoneno}</strong>
                           </li>*/}
+                           <li>
+                            <span> Name:</span>
+                            <strong>{this.props?.user.data.customer.firstName} {this.props?.user.data.customer.lastName}</strong>
+                          </li>
                           <li>
                             <span>Email:</span>
-                            <strong>{this.props?.user.contactEmail}</strong>
+                            <strong>{this.props?.user.data.customer.email}</strong>
                           </li>
                           <li>
                             <span>Phone no:</span>
-                            <strong>{this.props?.user.customerNumber}</strong>
+                            <strong>{this.props?.user.data.customer.phone}</strong>
                           </li>
                           <li>
                             <span>customer_id:</span>
-                            <strong>{this.props?.user.customer_id}</strong>
+                            <strong>{this.props?.user.data.customer.id}</strong>
                           </li>
-                          <li>
-                            <span>Company Name:</span>
-                            <strong>{this.props?.user.company}</strong>
-                          </li>
+                         
                           {/* <li>
                             <span>Address:</span>
                             <strong>{Profile.address}</strong>

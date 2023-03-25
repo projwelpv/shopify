@@ -71,7 +71,7 @@ class HomePage extends Component {
                           <Row mb={3} className="justify-content-center">
                             <Col sm={10} lg={6} className="text-center">
                               <div className="section-title">
-                                <h2 className="title"> Top Selling Products</h2>
+                                <h2 className="title"> Featured Products</h2>
                                 <p>
                                   Forget about struggling to do everything at
                                   once: taking care of the family, Running your

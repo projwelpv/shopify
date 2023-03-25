@@ -63,7 +63,7 @@ class App extends React.Component {
 
   componentWillMount() {
     this.props.getCategory();
-    //  this.props.receiveProducts();
+     this.props.receiveProducts();
     this.props.getPrices();
   }
   getUrl(pathname) {

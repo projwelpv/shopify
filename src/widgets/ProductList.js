@@ -45,10 +45,10 @@ class ProductList extends Component {
         // addToCartItem(ProductID, Sku);
         let pricelist=[]
         this.props.prices.map((each,index)=>{
-    if(each.itemId.id===ProductID){
-      pricelist.push(each)
+    // if(each.itemId.id===ProductID){
+    //   pricelist.push(each)
 
-    }
+    // }
   })
 
   if(pricelist.length >0){
@@ -155,18 +155,18 @@ class ProductList extends Component {
             <div className="product-thumbnail">
               <div className="product-thumbnail-inner">
                 <Link to={`/shop/${product.id}`}>
-                  {product.media[0] ? (
+                  {product.images[0] ? (
                     <div className="product-thumbnail-main">
                       <img
-                        src={`${product.media[0].url}`}
+                        src={`${product.images[0].src}`}
                         className="img-fluid"
                       />
                     </div>
                   ) : null}
-                  {product.media[0].url ? (
+                  {product.images[0].src ? (
                     <div className="product-thumbnail-swap">
                       <img
-                        src={`${product.media[0].url}`}
+                        src={`${product.images[0].src}`}
                         className="img-fluid"
                       />
                     </div>
@@ -182,10 +182,10 @@ class ProductList extends Component {
                         onClick={() =>
                           this.AddToCart(
                             product.id,
-                            product.name.en,
-                            product.media[0].url,
+                            product.title,
+                            product.images[0].src,
                             1,
-                            this.getProductPrice(product.id),
+                            product.variants[0].price,
                             "In Stock",
                             product.id
                           )
@@ -253,9 +253,9 @@ class ProductList extends Component {
                   ))}
                 </span>
               ) : null} */}
-              {product.name ? (
+              {product.title ? (
                 <h3 className="product-name">
-                  <Link to={`/shop/${product.id}`}>{product.name.en}</Link>
+                  <Link to={`/shop/${product.id}`}>{product.title}</Link>
                 </h3>
               ) : null}
               <div className="product-rating-price">
@@ -278,7 +278,7 @@ class ProductList extends Component {
                         <span className="currency-symbol">$</span>
                         {/* {product.salePrice.toLocaleString(navigator.language, {
                           minimumFractionDigits: 0,
-                        })} */} {this.getProductPrice(product.id)}
+                        })} */} { product.variants[0].price}
                       </span>
                     </ins>
                   </span>

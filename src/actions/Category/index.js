@@ -4,7 +4,7 @@ import { get } from "../../api/APIController";
 import store from "../../Store";
 export const getCategory = () => {
   return (dispatch) => {
-   get('getAllProducts')
+   get('products')
       .then((response) => {
         if (response.status == 200) {
             store.dispatch(receiveProducts(response.data));

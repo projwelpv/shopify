@@ -104,13 +104,13 @@ class ProductDetail extends Component {
   componentDidMount() {
     window.scrollTo(0, 0);
     let CurrentProductId = this.state.ProductId;
-    let allproductdata = this.state.AllProduct;
+    let allproductdata = this.props.products;
 
     if (allproductdata && allproductdata.length > 0) {
       console.log("product", allproductdata);
       allproductdata.map((product) => {
         console.log("product.id", product.id, "aa", CurrentProductId);
-        if (product.id === CurrentProductId) {
+        if (product.id == CurrentProductId) {
           this.setState({
             ...this.state,
             CurrentProduct: product,
@@ -149,7 +149,7 @@ class ProductDetail extends Component {
                         <span>{Productedit.category}</span>
                       </li> */}
                       <li>
-                        <span>{Productedit.name.en}</span>
+                        <span>{Productedit.title}</span>
                       </li>
                     </ul>
                   </div>
@@ -203,7 +203,7 @@ class ProductDetail extends Component {
                         aria-labelledby="home-tab"
                       >
                         {/* <h2>What is Lorem Ipsum?</h2> */}
-                        <p className="mt-2">{Productedit.description.en}</p>
+                        <p className="mt-2">{Productedit.title}</p>
 
                         <div className="product-info-box border-top border-bottom mt-5  pt-4 pt-lg-0 pb-2 pb-sm-0">
                           <Row>
@@ -373,7 +373,7 @@ class ProductDetail extends Component {
 
 const AppMapStateToProps = (state) => {
   return {
-    products: state.data.products,
+    products: state.data.products.products,
   };
 };
 

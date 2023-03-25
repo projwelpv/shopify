@@ -166,7 +166,7 @@ class ShopPage extends Component {
 }
 const mapDispatchToProps = (state) => ({
   // products: getFilterProductsdata(state.data, state.filters),
-  products:state.data.products,
+  products:state.data.products.products,
   allPrices:state?.price?.prices
 });
 export default connect(mapDispatchToProps, {})(ShopPage);
