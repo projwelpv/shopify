@@ -143,10 +143,8 @@ class OrderHistory extends Component {
     window.scrollTo(0, 0);
   }
 
-
-   
-   getDate(data,d) {
-   let months = [
+  getDate(data, d) {
+    let months = [
       "Jan",
       "Feb",
       "Mar",
@@ -162,14 +160,15 @@ class OrderHistory extends Component {
     ];
     let newDate = new Date(data);
     return (
-      newDate.getDate()+d +
+      newDate.getDate() +
+      d +
       " " +
       months[newDate.getMonth()] +
       " " +
       newDate.getFullYear()
     );
   }
-  
+
   render() {
     const OrderHistory = this.state.Order;
     const ViewOrderdata = this.state.ViewOrder;
@@ -240,7 +239,12 @@ class OrderHistory extends Component {
                               (orderData) => (
                                 <tr>
                                   <td>{orderData.node.orderNumber}</td>
-                                  <td>{this.getDate(orderData.node.processedAt,0)}</td>
+                                  <td>
+                                    {this.getDate(
+                                      orderData.node.processedAt,
+                                      0
+                                    )}
+                                  </td>
 
                                   {/* <td style={{ textTransform: "capitalize" }}>
                                   {Ordervalue.fulfill_type.replace(/_/g, " ")}
@@ -294,20 +298,24 @@ class OrderHistory extends Component {
                       <div className="success-screen">
                         <div className="thank-you text-center">
                           <i className="fa fa-check-circle-o"></i>
-                          <h1 className="text-white">Thank You</h1>
+
+                          <h1 className="text-white">
+                            Confirmation #{viewOrder?.data?.node?.orderNumber}.
+                            Thank you{" "}
+                            {viewOrder?.data?.node?.shippingAddress?.firstName}!
+                          </h1>
                           <span>
-                            Success! We received your payment. Your order will
-                            be processed soon.
+                            Your order has been placed successfully, Your order
+                            will be processed soon!
                           </span>
-                          <strong className="text-white">
+                          {/* <strong className="text-white">
                             Transaction ID:{viewOrder?.data?.node.orderNumber}
-                          </strong>
+                          </strong> */}
                         </div>
                         <div className="delivery p-4 p-md-5 bg-light text-center">
                           <span className="h5">Expected Date Of Delivery</span>
                           <h2 className="mb-0 mt-2">
-                          
-                            {this.getDate(viewOrder?.data?.node.processedAt,5)}
+                            {this.getDate(viewOrder?.data?.node.processedAt, 5)}
                           </h2>
                         </div>
                         <div className="pt-4 px-4 pt-md-5 px-md-5 pb-3">
@@ -356,13 +364,16 @@ class OrderHistory extends Component {
                                 <li>
                                   <span>Order ID:</span>{" "}
                                   <strong>
-                                    {viewOrder?.data?.node?.orderNumber}
+                                    #{viewOrder?.data?.node?.orderNumber}
                                   </strong>
                                 </li>
                                 <li>
                                   <span>Order Date:</span>{" "}
                                   <strong>
-                                    {viewOrder?.data?.node?.processedAt}
+                                    {this.getDate(
+                                      viewOrder?.data?.node?.processedAt,
+                                      0
+                                    )}
                                   </strong>
                                 </li>
                                 <li>
@@ -452,13 +463,13 @@ class OrderHistory extends Component {
                                   <td className="text-right">$0.00</td>
                                 </tr>
                                 <tr>
-                                  <td>Tax(GST)</td>
+                                  <td>Tax</td>
                                   <td className="text-right">
                                     ${" "}
-                                    {
+                                    {/* {
                                       viewOrder?.data?.node?.totalPriceV2
                                         ?.amount
-                                    }
+                                    } */}
                                     .00
                                   </td>
                                 </tr>
