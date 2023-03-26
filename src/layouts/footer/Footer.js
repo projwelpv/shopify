@@ -54,7 +54,7 @@ class Footer extends React.Component {
                           <Link to="#">
                             <img
                               className="img-fluid"
-                              src={require(`../../assets/images/tt.png`)}
+                              src={require(`../../assets/images/interplay1.svg`)}
                               alt="logo"
                             />
                           </Link>
@@ -62,23 +62,25 @@ class Footer extends React.Component {
                       </div>
                       <div className="text-content">
                         <p className="mb-3 mt-4">
-                          Over the past 38 years, talented and capable people
-                          have powered Shopify growth and built our
-                          reputation as a world-class pharmaceutical company.
-                          Because when people with diverse skills are bound
-                          together by a common purpose and values, they can make
-                          magic.
+                          Developer of AI-powered low code software and
+                          ecosystem intended to accelerate innovation projects
+                          within large enterprises. Our platform accelerates the
+                          development and deployment of AI-centric enterprise
+                          applications. Our low-code environment empowers us to
+                          develop and deploy digital solutions faster, enabling
+                          enterprises to go to market 17x faster with their
+                          digital initiatives. We have deployed at scale with
+                          several global enterprises, such as Circle-K, Pampered
+                          Chef, Ulta Beauty, Driven Brands, Jockey, and others.
+                          Iterate's innovation platform has more than 10 patents
+                          pending.
                         </p>
                         <p className="mb-4">
-                          Our patients trust our medicines, and we believe that
-                          his trust must be earned every single day. Each of us
-                          at Shopify is driven by the belief that Good
-                          Health Can’t Wait. Acting with empathy and dynamism,
-                          we continually remind ourselves that the interests of
-                          our patients always comes first. In pursuit of our
-                          belief, we will create an environment of innovation
-                          and learning, as we push ourselves to reach higher
-                          level of excellence.
+                          We work with the CEOs, COOs, and CTOs of enterprise
+                          innovators who seek fast systematic ways to scale
+                          in-house AI, IoT, and Big Data solutions. Our team has
+                          a global presence in North America (Silicon Valley,
+                          Colorado), Europe, and Asia (India).
                         </p>
                         {/* <p className="mb-4">
                           The theme is packed with everything you need to create
@@ -218,17 +220,17 @@ class Footer extends React.Component {
                             <li>
                               <i className="fa fa-map-marker" />
                               <span>
-                                8-2-337, Road No. 3,Jaya nagar,
-                                Bangalure 600034, INDIA
+                                3031 Tisch Way, San Jose, California, 95128,
+                                United States
                               </span>
                             </li>
                             <li className="pgs-contact-email">
                               <i className="fa fa-envelope-o" />
-                              <span>support@exporix.com</span>
+                              <span>shomron@iteratestudio.com</span>
                             </li>
                             <li>
                               <i className="fa fa-phone" />
-                              <span>123-456-7890</span>
+                              <span>+1 312-982-9843</span>
                             </li>
                           </ul>
                         </div>
@@ -325,8 +327,8 @@ class Footer extends React.Component {
                     <Col md={6} className="float-left">
                       <p>
                         {" "}
-                        © Copyright 2023 <Link to="#">Shopify</Link> All
-                        Rights Reserved.
+                        © Copyright 2023 <Link to="#">Interplay</Link> All Rights
+                        Reserved.
                       </p>
                     </Col>
                     <Col md={6} className="float-right">

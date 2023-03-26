@@ -31,6 +31,7 @@ import { signUpCustomer } from "../../actions/Customer/SignUp";
 import AllProduct from "../../api/product";
 import logo from "../../assets/images/emporix.svg";
 import logo1 from "../../assets/images/tt.png";
+import logo2 from "../../assets/images/interplay1.svg"
 import navLinks from "../../NavLinks.js";
 import { ToastContainer, toast } from "react-toastify";
 import { deleteCartItems } from "../../actions/Cart";
@@ -241,13 +242,13 @@ class Header extends React.Component {
                           <li className="topbar_item topbar_item_type-email">
                             <Link to="#">
                               <i className="fa fa-envelope-o">&nbsp;</i>
-                              support@shopify.com
+                              support@interplay.com
                             </Link>
                           </li>
                           <li className="topbar_item topbar_item_type-phone_number">
                             <Link to="#">
                               <i className="fa fa-phone">&nbsp;</i>
-                              123-456-7890
+                              +1 312-982-9843
                             </Link>
                           </li>
                         </ul>
@@ -355,7 +356,7 @@ class Header extends React.Component {
                       <Col xl={2} lg={2} className="col-6">
                         <div className="logo-wrapper">
                           <Link to="/">
-                            <img className="img-fluid" src={logo1} alt="logo" />
+                            <img className="img-fluid" src={logo2} alt="logo" />
                           </Link>
                         </div>
                         <div className="clearfix" />

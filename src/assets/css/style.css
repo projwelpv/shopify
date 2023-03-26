@@ -3119,7 +3119,7 @@ header.site-header .logo-wrapper {
 }
 
 header.site-header .logo-wrapper img {
-  width: 200px;
+  width: 50px;
 }
 
 header.site-header .topbar {
@@ -5312,7 +5312,7 @@ footer.site-footer .logo-wrapper {
 }
 
 footer.site-footer .logo-wrapper img {
-  max-width: 200px;
+  max-width: 50px;
 }
 
 footer.site-footer .footer-title {

@@ -51,33 +51,35 @@ class Subscribe extends Component {
    render() {
     return (
 
-        <div className="banner-bg section-ptb" style={{backgroundImage: `url(${BG_Image})`}} >
-          <Row className="justify-content-center">
-            <Col sm={10} lg={6} md={8}>
-                    <div className="newsletter-wrapper newsletter-style-1 newsletter-design-4">
-                    <h2 className="newsletter-title"> Subscribe today and get 25% off on your first order!</h2>
-                    <div className="newsletter">
-                        <div className="section-field">
-                        <div className="field-widget clearfix">
-                            <form className="newsletter_form" onSubmit={this.onProfileFormSubmit.bind(this)}>
-                                <div className="input-area">
-                                    <input type="email" className="placeholder newsletter-email" value={this.state.fieldvalue.newsletter_email} onChange={this.handleChange.bind(this, "newsletter_email")} name="newsletter_email" placeholder="Enter your email" />
-                                    <span className="error">{this.state.errors["newsletter_email"]}</span>
-                                </div>
-                               <div className="button-area">
-                                    <span className="input-group-btn">
-                                        <button type="submit" className="btn btn-icon">Subscribe</button>
-                                    </span>
-                                </div>
+        // <div className="banner-bg section-ptb" style={{backgroundImage: `url(${BG_Image})`}} >
+        //   <Row className="justify-content-center">
+        //     <Col sm={10} lg={6} md={8}>
+        //             <div className="newsletter-wrapper newsletter-style-1 newsletter-design-4">
+        //             <h2 className="newsletter-title"> Subscribe today and get 25% off on your first order!</h2>
+        //             <div className="newsletter">
+        //                 <div className="section-field">
+        //                 <div className="field-widget clearfix">
+        //                     <form className="newsletter_form" onSubmit={this.onProfileFormSubmit.bind(this)}>
+        //                         <div className="input-area">
+        //                             <input type="email" className="placeholder newsletter-email" value={this.state.fieldvalue.newsletter_email} onChange={this.handleChange.bind(this, "newsletter_email")} name="newsletter_email" placeholder="Enter your email" />
+        //                             <span className="error">{this.state.errors["newsletter_email"]}</span>
+        //                         </div>
+        //                        <div className="button-area">
+        //                             <span className="input-group-btn">
+        //                                 <button type="submit" className="btn btn-icon">Subscribe</button>
+        //                             </span>
+        //                         </div>
 
-                            </form>
-                        </div>
-                        </div>
-                    </div>
-                    </div>
-                </Col>
-            </Row>
-            </div>
+        //                     </form>
+        //                 </div>
+        //                 </div>
+        //             </div>
+        //             </div>
+        //         </Col>
+        //     </Row>
+        //     </div>
+
+        <></>
       )
    }
 }

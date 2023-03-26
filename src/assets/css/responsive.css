@@ -599,7 +599,7 @@
   }
 
   header.site-header .logo-wrapper img {
-    width: 150px;
+    width: 50px;
   }
 
   .slider-01 .slide-content .slide-sale {
@@ -1736,7 +1736,7 @@
   }
 
   footer.site-footer .logo-wrapper img {
-    max-width: 150px;
+    max-width: 50px;
   }
 
   .contact-wrapper {
