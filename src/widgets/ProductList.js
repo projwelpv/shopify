@@ -187,7 +187,7 @@ class ProductList extends Component {
                             1,
                             product.variants[0].price,
                             "In Stock",
-                            product.id
+                            product?.variants[0].id
                           )
                         }
                         className="button add_to_cart_button"
@@ -205,7 +205,7 @@ class ProductList extends Component {
                       </Link>
                     )}
                   </div>
-                  <div className="product-action product-action-wishlist">
+                  {/* <div className="product-action product-action-wishlist">
                     {!this.CheckWishList(product.id) ? (
                       <Link
                         onClick={() =>
@@ -238,7 +238,7 @@ class ProductList extends Component {
                         View Wishlist
                       </Link>
                     )}
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>

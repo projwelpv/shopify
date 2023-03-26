@@ -35,6 +35,7 @@ import navLinks from "../../NavLinks.js";
 import { ToastContainer, toast } from "react-toastify";
 import { deleteCartItems } from "../../actions/Cart";
 import { uuidv4 } from "../../helper";
+import LocalStorageService from "../../storage/LocalStorageService";
 class Header extends React.Component {
   constructor(props) {
     super(props);
@@ -275,7 +276,7 @@ class Header extends React.Component {
                                         this.props?.user &&
                                         this.props.user?.data?.customer?.id
                                       ) {
-                                        this.props.logoutCustomer();
+                                        this.props.logoutCustomer({  customerAccessToken :LocalStorageService.setUserToken()});
                                         localStorage.setItem("MYID", uuidv4());
                                       } else {
                                         this.toggle();
@@ -650,7 +651,7 @@ class Header extends React.Component {
                                     </div>
                                   )}
                                 </li>
-                                <li className="ciya-tools-action ciya-tools-wishlist">
+                                {/* <li className="ciya-tools-action ciya-tools-wishlist">
                                   {" "}
                                   <Link to="/wishlist">
                                     <i className="glyph-icon pgsicon-ecommerce-like" />{" "}
@@ -661,7 +662,7 @@ class Header extends React.Component {
                                         : this.ReadWishListItems().length}{" "}
                                     </span>{" "}
                                   </Link>
-                                </li>
+                                </li> */}
                                 <li className="ciya-tools-action ciya-tools-search">
                                   <Link to={searchName}>
                                     <i className="glyph-icon pgsicon-ecommerce-magnifying-glass" />

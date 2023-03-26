@@ -10,7 +10,9 @@ import { bindActionCreators } from "redux";
 import {
   deleteCartItems,
   getCartItems,
-  updateCartQty,deleteCartItemsNew
+  updateCartQty,
+  deleteCartItemsNew,
+  checkoutURL,
 } from "../../actions/Cart";
 
 class ShopingCart extends Component {
@@ -62,7 +64,7 @@ class ShopingCart extends Component {
   SetDefaults() {
     var cart = JSON.parse(localStorage.getItem("LocalCartItems"));
 
-    if (cart.length == 0) {
+    if (cart?.length == 0) {
       this.props.history.push(`/`);
       return;
     }
@@ -83,9 +85,9 @@ class ShopingCart extends Component {
     );
     return JSON.parse(localStorage.getItem("LocalCartItems"));
   }
-  removeFromCart = (Index,productId) => {
+  removeFromCart = (Index, productId) => {
     var UpdatedCart = JSON.parse(localStorage.getItem("LocalCartItems"));
-    deleteCartItemsNew(productId,this.props.allPrices,this.props.cartID);
+    deleteCartItemsNew(productId, this.props.allPrices, this.props.cartID);
     UpdatedCart = UpdatedCart.slice(0, Index).concat(
       UpdatedCart.slice(Index + 1, UpdatedCart.length)
     );
@@ -102,14 +104,15 @@ class ShopingCart extends Component {
     console.log("dasdasdasd", UpdatedCart);
     this.props
       .updateCartQty(
-        UpdatedCart[Index].cart_id,
-        parseInt(UpdatedCart[Index].Qty)
+        UpdatedCart[Index].CartId,
+        parseInt(UpdatedCart[Index].Qty),
+        UpdatedCart[Index].CartLineID
       )
       .then((result) => {
-        this.props.getCartItems().then((result) => {
-          localStorage.setItem("LocalCartItems", JSON.stringify(result));
-          this.forceUpdate();
-        });
+        // this.props.getCartItems().then((result) => {
+        //   localStorage.setItem("LocalCartItems", JSON.stringify(result));
+        //   this.forceUpdate();
+        // });
       });
   };
 
@@ -220,7 +223,9 @@ class ShopingCart extends Component {
                           <tr>
                             <td className="product-remove">
                               <Link
-                                onClick={() => this.removeFromCart(index,CartItem.ProductID)}
+                                onClick={() =>
+                                  this.removeFromCart(index, CartItem.ProductID)
+                                }
                                 className="remove"
                               ></Link>
                             </td>
@@ -240,7 +245,8 @@ class ShopingCart extends Component {
                               {/* {CartItem.Rate.toLocaleString(
                                 navigator.language,
                                 { minimumFractionDigits: 0 }
-                              )} */}{CartItem.Rate}
+                              )} */}
+                              {CartItem.Rate}
                             </td>
                             <td className="product-quantity">
                               <div className="quantity">
@@ -512,7 +518,18 @@ class ShopingCart extends Component {
                       </Table>
                     </div>
                     <div className="proceed-to-checkout">
-                      <Link to="CheckOut" className="checkout-button button">
+                      <Link
+                        className="checkout-button button"
+                        onClick={() => {
+                          checkoutURL().then((re) => {
+                            console.log(
+                              "This is srikanth reddy from check out",
+                              re
+                            );
+                             window.location.replace(re);
+                          });
+                        }}
+                      >
                         Proceed to checkout
                       </Link>
                     </div>
@@ -549,6 +566,7 @@ const AppMapDispatchToProps = (dispatch) => {
     {
       getCartItems,
       updateCartQty,
+      
     },
     dispatch
   );

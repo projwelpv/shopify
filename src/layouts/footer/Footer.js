@@ -283,7 +283,7 @@ class Footer extends React.Component {
                             </div>
                           </Row>
                         </Col>
-                        <Col lg={6}>
+                        {/* <Col lg={6}>
                           <div className="app-group row text-lg-right">
                             <Col md={4}>
                               <div className="app-img">
@@ -311,7 +311,7 @@ class Footer extends React.Component {
                               </Link>
                             </Col>
                           </div>
-                        </Col>
+                        </Col> */}
                       </Row>
                     </div>
                   </div>

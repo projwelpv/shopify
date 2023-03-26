@@ -29,7 +29,7 @@ const banners = [
 class HomSlider extends Component {
   constructor(props) {
     super(props);
-    getContent();
+    // getContent();
   }
   render() {
     return (

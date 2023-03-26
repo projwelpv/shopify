@@ -9,10 +9,15 @@ export const loginCustomer = (params) => {
     return new Promise((resolve, reject) => {
       return post(`accessToken`, params)
         .then((response) => {
-          let data1={
-            "customerAccessToken" :response.data?.data?.customerAccessTokenCreate?.customerAccessToken?.accessToken
-          }
-          LocalStorageService.setUserToken(response?.data?.customerAccessTokenCreate?.customerAccessToken?.accessToken);
+          let data1 = {
+            customerAccessToken:
+              response.data?.data?.customerAccessTokenCreate
+                ?.customerAccessToken?.accessToken,
+          };
+          LocalStorageService.setUserToken(
+            response?.data?.data?.customerAccessTokenCreate?.customerAccessToken
+              ?.accessToken
+          );
           console.log("Login ", response);
           if (response.status === 200) {
             if (
@@ -24,10 +29,10 @@ export const loginCustomer = (params) => {
             }
           }
           // const foundCustomerId = extractCustomerID(response.data?.scope)
-          
+
           // LocalStorageService.setSaasToken(response.data?.saasToken);
-         
-          post("customer",data1)
+
+          post("customer", data1)
             .then((response) => {
               if (response.status === 200) {
                 // LocalStorageService.setCustId(response.data?.id);
@@ -44,7 +49,7 @@ export const loginCustomer = (params) => {
                 dispatch({
                   type: "LOGIN_SUCCESS",
                   user: response,
-                })
+                });
                 localStorage.setItem(
                   "customerInfo",
                   JSON.stringify(response.data)
@@ -128,13 +133,32 @@ export const getCustomerInformation = () => {
 };
 
 export const logoutCustomer = (params) => {
+  // return (dispatch) => {
+  //   dispatch({
+  //     type: "LOGOUT",
+  //     user: {},
+  //   });
+  //   localStorage.clear();
+  //   window.location.replace("/");
+  // };
+
   return (dispatch) => {
-    dispatch({
-      type: "LOGOUT",
-      user: {},
-    });
-    localStorage.clear();
-    window.location.replace("/");
+    return post("customerAccessTokenDelete",params)
+      .then((response) => {
+        if (response.status === 200) {
+          dispatch({
+            type: "LOGOUT",
+            user: {},
+          });
+          localStorage.clear();
+           window.location.replace("/");
+          return true;
+        } else {
+          return false;
+        }
+      })
+      .catch()
+      .finally();
   };
 };
 

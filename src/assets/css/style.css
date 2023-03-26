@@ -17744,7 +17744,7 @@ ul.products .product-inner .product-info .stock {
 
 .single-product .product-summary-actions {
   margin-bottom: 0;
-  border-bottom: 1px solid #d3ced2;
+  /* border-bottom: 1px solid #d3ced2; */
   padding-bottom: 15px;
   display: inline-block;
   width: 100%;

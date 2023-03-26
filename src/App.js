@@ -64,7 +64,7 @@ class App extends React.Component {
   componentWillMount() {
     this.props.getCategory();
      this.props.receiveProducts();
-    this.props.getPrices();
+    // this.props.getPrices();
   }
   getUrl(pathname) {
     let pathArray = pathname.split("/");

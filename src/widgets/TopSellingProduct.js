@@ -8,7 +8,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 
 import MyProducts from "../api/product.json";
-import { addToCartItem } from "../actions/Cart";
+import { addToCartItem, updateCartLine, Test1 } from "../actions/Cart";
 import { connect } from "react-redux";
 
 class TopSellingProduct extends Component {
@@ -35,23 +35,26 @@ class TopSellingProduct extends Component {
         StockStatus: StockStatus,
         Sku: Sku,
       });
-      localStorage.removeItem("LocalCartItems");
+       localStorage.removeItem("LocalCartItems");
       localStorage.setItem("LocalCartItems", JSON.stringify(Cart));
-      let pricelist = [];
-      this.props.allPrices.map((each, index) => {
-        if (each.itemId.id === ProductID) {
-          pricelist.push(each);
-        }
-      });
-
-      if (pricelist.length > 0) {
-        addToCartItem(this.props.cartID, ProductID, pricelist);
-      }
 
       toast.success("Item Added to Cart");
     } else {
       toast.warning("Item is already in Cart");
     }
+// console.log("this is length",Cart.length>1)
+    // if(Cart.length>1){
+    //   updateCartLine(Sku)
+
+    // }
+    // else{
+    // addToCartItem(Sku, Qty, ProductID).then((res) => {
+    //   // console.log("poredyyd ",res.data.data.cartCreate.cart.lines.edges[0].node.id)
+    // });}
+    // addToCartItem(Sku, Qty, ProductID).then((res) => {
+   
+    // });
+
   }
 
   AddToWishList(
@@ -140,14 +143,13 @@ class TopSellingProduct extends Component {
   }
 
   render() {
-
     // console.log("this issssssssssssss",this.props.products)
     return (
       <Row className="products products-loop grid ciyashop-products-shortcode">
         <ToastContainer autoClose={1000} />
 
         {this.props?.products?.products?.map((product, index) =>
-          index < 8 ? (
+          index < 18 ? (
             <Col sm={6} lg={3}>
               <div className="product product_tag-black product-hover-style-default product-hover-button-style-dark product_title_type-single_line product_icon_type-line-icon">
                 <div className="product-inner element-hovered">
@@ -179,13 +181,13 @@ class TopSellingProduct extends Component {
                                 this.AddToCart(
                                   product.id,
                                   product.title,
-                                  product.images[0].url,
+                                  product.images[0].src,
                                   1,
                                   // this.getProductPrice(product.id),
                                   product.variants[0].price,
 
                                   "In Stock",
-                                  product.id
+                                  product.variants[0].id
                                 )
                               }
                               className="button add_to_cart_button"
@@ -203,7 +205,7 @@ class TopSellingProduct extends Component {
                             </Link>
                           )}
                         </div>
-                        <div className="product-action product-action-wishlist">
+                        {/* <div className="product-action product-action-wishlist">
                           {!this.CheckWishList(product.id) ? (
                             <Link
                               onClick={() =>
@@ -236,7 +238,7 @@ class TopSellingProduct extends Component {
                               View Wishlist
                             </Link>
                           )}
-                        </div>
+                        </div> */}
                       </div>
                     </div>
                   </div>
@@ -256,7 +258,7 @@ class TopSellingProduct extends Component {
                               navigator.language,
                               { minimumFractionDigits: 0 }
                             )} */}{" "}
-                            { product.variants[0].price}
+                            {product.variants[0].price}
                           </span>
                         </ins>
                       </span>

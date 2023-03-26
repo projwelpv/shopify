@@ -95,10 +95,10 @@ class AccountProfile extends Component {
                             <span>Phone no:</span>
                             <strong>{this.props?.user.data.customer.phone}</strong>
                           </li>
-                          <li>
+                          {/* <li>
                             <span>customer_id:</span>
                             <strong>{this.props?.user.data.customer.id}</strong>
-                          </li>
+                          </li> */}
                          
                           {/* <li>
                             <span>Address:</span>

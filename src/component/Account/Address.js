@@ -57,9 +57,9 @@ class Address extends Component {
                       </div>
                       <div className="woocommerce-Address-info mt-4">
                         <ul class="list-unstyled mb-0">
-                          <li>
+                          {/* <li>
                             <strong>{BillingAddress.billingname}</strong>
-                          </li>
+                          </li> */}
                           <li>
                             <strong>{BillingAddress.address}</strong>
                           </li>
@@ -86,9 +86,9 @@ class Address extends Component {
                       </div>
                       <div className="woocommerce-Address-info mt-4">
                         <ul class="list-unstyled mb-0">
-                          <li>
+                          {/* <li>
                             <strong>{ShippingAddress.shippingname}</strong>
-                          </li>
+                          </li> */}
                           <li>
                             <strong>{ShippingAddress.address}</strong>
                           </li>

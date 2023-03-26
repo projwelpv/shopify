@@ -2,7 +2,7 @@ import { post, get, deleteCall, putCall } from "../../api/APIController";
 import LocalStorageService from "../../storage/LocalStorageService";
 import store from "../../Store";
 
-export const addToCartItem = async (id, productID, allPrices) => {
+export const addToCartItem = async (id, quantity, pid) => {
   // let data = {
   //   reference: localStorage.getItem("MYID"),
   //   data: {
@@ -12,29 +12,29 @@ export const addToCartItem = async (id, productID, allPrices) => {
   //     sku: sku,
   //   },
   // };
-  const custId = LocalStorageService.getCustId();
-  let data = {
-    customerId: custId,
-    siteCode: "main",
-    type: "shopping",
-    channel: {
-      name: "storefront",
-      source: "https://your-storefront.com/",
-    },
-    currency: "USD",
-  };
-  console.log("this is srikanth all prices", allPrices);
+  // const custId = LocalStorageService.getCustId();
+  // let data = {
+  //   customerId: custId,
+  //   siteCode: "main",
+  //   type: "shopping",
+  //   channel: {
+  //     name: "storefront",
+  //     source: "https://your-storefront.com/",
+  //   },
+  //   currency: "USD",
+  // };
+  // console.log("this is srikanth all prices", allPrices);
 
-  let createCartData = {
-    itemYrn: `urn:yaas:saasag:caasproduct:product:cnetric;${productID}`,
-    price: {
-      priceId: allPrices[0]?.id,
-      effectiveAmount: 2,
-      originalAmount: 2.75,
-      currency: "USD",
-    },
-    quantity: 1,
-  };
+  // let createCartData = {
+  //   itemYrn: `urn:yaas:saasag:caasproduct:product:cnetric;${productID}`,
+  //   price: {
+  //     priceId: allPrices[0]?.id,
+  //     effectiveAmount: 2,
+  //     originalAmount: 2.75,
+  //     currency: "USD",
+  //   },
+  //   quantity: 1,
+  // };
 
   // post("createCart", data, true)
   //   .then((response) => {
@@ -47,12 +47,86 @@ export const addToCartItem = async (id, productID, allPrices) => {
   //   })
   //   .finally();
 
-  post(`addItemToCart/${id}`, createCartData, true)
-    .then((response) => {
-      console.log("this is add item to cart");
-    })
-    .catch()
-    .finally();
+  // post(`addItemToCart/${id}`, createCartData, true)
+  //   .then((response) => {
+  //     console.log("this is add item to cart");
+  //   })
+  //   .catch()
+  //   .finally();
+
+  let Cart = JSON.parse(localStorage.getItem("LocalCartItems"));
+
+  let params = {
+    cartInput: {
+      lines: [
+        {
+          quantity: quantity,
+          merchandiseId: `gid://shopify/ProductVariant/${id}`,
+        },
+      ],
+      buyerIdentity: {
+        email: "example4@example.com",
+        countryCode: "CA",
+        deliveryAddressPreferences: {
+          deliveryAddress: {
+            address1: "150 Elgin Street",
+            address2: "8th Floor",
+            city: "Ottawa",
+            province: "Ontario",
+            country: "CA",
+            zip: "K2P 1L4",
+          },
+        },
+      },
+      attributes: {
+        key: "cart_attribute_key",
+        value: "This is a cart attribute value",
+      },
+    },
+  };
+
+  return new Promise((resolve, reject) => {
+    post(`cartCreateAddLine`, params)
+      .then((response) => {
+        if (response.status == 200) {
+          // console.log("ORDER PLACED", response);
+          // deleteCart();
+
+          var Cart = JSON.parse(localStorage.getItem("LocalCartItems"));
+          // if (Cart == null) Cart = new Array();
+          let selectedProduct = Cart.find(
+            (product) => product.ProductID === pid
+          );
+          // console.log("testing srikanth reddy", {
+          //   ...selectedProduct,
+          //   CartLineID:
+          //     response.data.data.cartCreate.cart.lines.edges[0].node.id,
+          // });
+          let result = Cart.map((each) => {
+            if (each.ProductID === pid) {
+              return {
+                ...selectedProduct,
+                CartLineID:
+                  response.data.data.cartCreate.cart.lines.edges[0].node.id,
+                CartId: response.data.data.cartCreate.cart.id,
+              };
+            } else {
+              return each;
+            }
+          });
+
+          // console.log("clolsfdjf", result);
+          localStorage.removeItem("LocalCartItems");
+          localStorage.setItem("LocalCartItems", JSON.stringify(result));
+          resolve(response);
+        }
+      })
+      .catch((error) => {
+        reject(false);
+        console.log(error);
+      })
+      .finally();
+  });
 };
 
 export const deleteCart = async () => {
@@ -163,18 +237,21 @@ export const getCartItems = () => {
   };
 };
 
-export const updateCartQty = (id, qty) => {
-  let url = `/carts/${localStorage.getItem("MYID")}/items/${id}`;
+export const updateCartQty = (id, qty, lineId) => {
+  // let url = `/carts/${localStorage.getItem("MYID")}/items/${id}`;
+  let url = `increaseItemQuantity`;
   let params = {
-    data: {
-      id: id,
-      type: "cart_item",
+    cartId: id,
+    lines: {
+      id: lineId,
       quantity: qty,
     },
+    order: "first",
+    count: 10,
   };
 
   return (dispatch) => {
-    return putCall(url, params)
+    return post(url, params)
       .then((response) => {
         if (response.status == 200) {
           return true;
@@ -225,4 +302,150 @@ export const deleteCartItemsNew = async (id, allPrices, cartID) => {
       console.log(error);
     })
     .finally();
+};
+
+export const checkoutURL = async() => {
+  // let url = `/carts/${localStorage.getItem("MYID")}/items/${id}`;
+  var Cart = JSON.parse(localStorage.getItem("LocalCartItems"));
+  // let id = Cart[0]?.CartId;
+  let lines = [];
+  Cart.map((each) => {
+    lines.push({
+      quantity: each.Qty,
+      merchandiseId: `gid://shopify/ProductVariant/${each.Sku}`,
+    });
+  });
+
+  // let id = Cart[0].CartId;
+ 
+
+  // let data = {
+  //   id: id,
+  // };
+  let params = {
+    cartInput: {
+      lines: lines,
+      buyerIdentity: {
+        email: "example4@example.com",
+        countryCode: "CA",
+        deliveryAddressPreferences: {
+          deliveryAddress: {
+            address1: "150 Elgin Street",
+            address2: "8th Floor",
+            city: "Ottawa",
+            province: "Ontario",
+            country: "CA",
+            zip: "K2P 1L4",
+          },
+        },
+      },
+      attributes: {
+        key: "cart_attribute_key",
+        value: "This is a cart attribute value",
+      },
+    },
+  };
+
+ 
+
+  // return (dispatch) => {
+  //   return post(url, params)
+  //     .then((response) => {
+  //       if (response.status == 200) {
+  //         return response.data.data.cart.checkoutUrl;
+  //       } else {
+  //         return false;
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       return false;
+  //       console.log(error);
+  //     })
+  //     .finally();
+  // };
+
+  return new Promise((resolve, reject) => {
+    post(`cartCreateAddLine`, params)
+      .then((response) => {
+        if (response.status == 200) {
+          // post(url, {"id":id}).then((response) => {
+          //   if (response.status == 200) {
+          //     window.location.replace(response.data.data.cart.checkoutUrl);
+
+          //     return response.data.data.cart.checkoutUrl;
+          //   } else {
+          //     return false;
+          //   }
+          // });
+
+         let redirectUrl=Test1(response.data.data.cartCreate.cart.id)
+        resolve(redirectUrl)
+          
+        }
+      })
+      .catch((error) => {
+        reject(false);
+        console.log(error);
+      })
+      .finally();
+  });
+};
+
+export const updateCartLine = async (sku) => {
+  // let url = `/carts/${localStorage.getItem("MYID")}/items/${id}`;
+  var Cart = JSON.parse(localStorage.getItem("LocalCartItems"));
+  let id = Cart[0].CartId;
+  let url = `addCartLines`;
+  let params = {
+    cartId: id,
+    lines: {
+      merchandiseId: `gid://shopify/ProductVariant/${sku}`,
+      quantity: 2,
+    },
+  };
+
+  return (dispatch) => {
+    return post(url, params)
+      .then((response) => {
+        if (response.status == 200) {
+          //  window.location.replace(response.data.data.cart.checkoutUrl);
+          return response.data.data.cart.checkoutUrl;
+        } else {
+          return false;
+        }
+      })
+      .catch((error) => {
+        return false;
+        console.log(error);
+      })
+      .finally();
+  };
+};
+
+export const Test1 = (id) => {
+
+  let url = `checkoutURL`;
+  // var Cart = JSON.parse(localStorage.getItem("LocalCartItems"));
+  // let id = Cart[0]?.CartId;
+  var params= {
+    id: id,
+  };
+
+ 
+    return post(url, params)
+      .then((response) => {
+        if (response.status == 200) {
+          localStorage.removeItem("LocalCartItems");
+          return response.data.data.cart.checkoutUrl;
+        } else {
+          return false;
+        }
+      })
+      .catch((error) => {
+        return false;
+        console.log(error);
+      })
+      .finally();
+
+  
 };

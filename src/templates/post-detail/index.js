@@ -309,7 +309,7 @@ class PostDetail extends Component {
                       >
                         <div className="ciyashop-product-gallery__image">
                           <img
-                            src={product.images[this.state.colorTabp].src}
+                            src={product.images[this.state.colorTabp]?.src}
                             className="img-fluid"
                           />
                         </div>
@@ -370,23 +370,28 @@ class PostDetail extends Component {
                   <div className="product-details__short-description">
                     <div className="pdp-about-details-txt pdp-about-details-equit">
                       {/* {product.description.en} */}
-                      <div>
-                        <p>Color</p>
-                    <Nav pills>
-                        <NavItem>
+                    {product?.variants?.length >1 && <div>
+                        <p className="ml-2">Colors</p>
+                    <Nav tabs>
+                      {product?.variants.map((each,index)=>{
+                        return(<>
+                         <NavItem className="mr-2" >
                           <NavLink
                             className={classnames({
-                              active: this.state.activeTab === "1",
+                              active: this.state.activeTab === {index}+1,
                             })}
                             onClick={() => {
-                              this.logintoggle("1");
-                              this.setState({...this.state,colorTabp:0})
+                              this.logintoggle(index);
+                              this.setState({...this.state,colorTabp:index})
                             }}
-                          >
-                          Gold
+                            styles={{color:'red'}}>
+                       {each.title}
                           </NavLink>
                         </NavItem>
-                        <NavItem>
+                        </>)
+                      })}
+                       
+                        {/* <NavItem>
                           <NavLink
                             className={classnames({
                               active: this.state.activeTab === "2",
@@ -398,9 +403,9 @@ class PostDetail extends Component {
                           >
                             silver
                           </NavLink>
-                        </NavItem>
+                        </NavItem> */}
                       </Nav>
-                    </div>
+                    </div>}
                     </div>
                   </div>
                   <form className="cart">
@@ -444,7 +449,7 @@ class PostDetail extends Component {
                             1,
                             product.variants[0].price,
                             "In Stock",
-                            product.id
+                            product.variants[0].id
                           )
                         }
                         className="button single_add_to_cart_button"
@@ -463,7 +468,7 @@ class PostDetail extends Component {
                     )}
                     <div className="clearfix" />
                   </form>
-                  <div className="product-summary-actions">
+                  {/* <div className="product-summary-actions">
                     {!this.CheckWishList(product.id) ? (
                       <div className="add-to-wishlist">
                         <Link
@@ -475,7 +480,7 @@ class PostDetail extends Component {
                               qty,
                               product.variants[0].price,
                               "In Stock",
-                              product.id
+                              product.variants[0].id
                             )
                           }
                         >
@@ -487,7 +492,7 @@ class PostDetail extends Component {
                         <Link to="/wishlist">Browse Wishlist</Link>
                       </div>
                     )}
-                  </div>
+                  </div> */}
                   {/* <div className="product_meta"> */}
                   {/* <span className="sku_wrapper">
                       <label>SKU:</label>
@@ -520,7 +525,7 @@ class PostDetail extends Component {
                       ))}
                     </span> */}
                   {/* </div> */}
-                  <div className="social-profiles">
+                  {/* <div className="social-profiles">
                     <span className="share-label">Share :</span>
                     <ul className="share-links">
                       <li>
@@ -569,7 +574,7 @@ class PostDetail extends Component {
                         </a>
                       </li>
                     </ul>
-                  </div>
+                  </div> */}
                   <div className="ciyashop-sticky-btn">
                     <div className="ciyashop-sticky-btn-container container">
                       <div className="row align-items-center">
