@@ -1,5 +1,6 @@
 # Stage 1
-FROM node:18.15.0 as react-build
+FROM node:12.22.9 as react-build
+RUN node --version
 WORKDIR /app
 COPY . ./
 RUN npm install
